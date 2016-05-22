@@ -4,6 +4,8 @@
 # Date : 2016-05-22
 # Comments : initial version of software
 
+
+echo "Starting cli_audioplayer..."
 #find all the mp3 songs file on the system.
 find / -name *.mp3 2>/dev/null |grep -v .Trash* > mp3songs >&1
 
@@ -15,8 +17,8 @@ awk '{print "\""$0"\""}' mp3songs > mp3songs_actual
 
 song(){
 timestamp=`date +%y-%m-%d`
-rm  ~/temp_${timestamp}/*.mp3 
-printf "You have below 10 songs to play\n"
+rm -r  ~/temp_${timestamp}/*
+printf "You have below listed 10 songs to play\n"
 printf "===========================================================\n"
 
 mkdir -p ~/temp_${timestamp}
@@ -35,12 +37,19 @@ while read -r line; do
 			if [ "$var" = "Y" ]; then
 				 printf "Press option out of (1|2|3|4|5|6|7|8|9|10)\n"
 				 read option </dev/tty
-		 		 eval nohup play ~/temp_${timestamp}/s${option}.mp3 2>&1 /dev/null &
-				 printf "Want to see next list of songs... \n" 
+		 		 eval nohup vlc ~/temp_${timestamp}/s${option}.mp3 2>&1 < /dev/null &
+				 return
+				 clear
 			else 
 				rm  ~/temp_${timestamp}/*.mp3 
 				counter=0
 				clear
+				printf "Want to see next list of songs(Y/n)\n"
+				read nsong </dev/tty
+				clear
+					if [ "$nsong" = "n" ]; then 
+					return
+					fi
 				printf "Displaying next 10 song list\n"
 			fi
 	fi
@@ -49,7 +58,7 @@ while read -r line; do
 done < mp3songs_actual
 }
 stop(){
-processid=`ps -ef|grep s*.mp3|head -1|awk '{print $2}'`
+processid=`ps -ef|grep vlc|head -1|awk '{print $2}'`
 kill -9 $processid
 }
 "$@"
