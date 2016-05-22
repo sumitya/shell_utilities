@@ -1,4 +1,8 @@
 #!/bin/bash
+# Description : cli_audioplayer for playing audio songs availble on pc from andriod phone
+# Author : syadav
+# Date : 2016-05-22
+# Comments : initial version of software
 
 #find all the mp3 songs file on the system.
 find / -name *.mp3 2>/dev/null |grep -v .Trash* > mp3songs >&1
