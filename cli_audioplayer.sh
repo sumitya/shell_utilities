@@ -35,7 +35,7 @@ while read -r line; do
 			if [ "$var" = "Y" ]; then
 				 printf "Press option out of (1|2|3|4|5|6|7|8|9|10)\n"
 				 read option </dev/tty
-		 		 eval nohup play ~/temp_${timestamp}/s${option}.mp3 2>/dev/null &
+		 		 eval nohup play ~/temp_${timestamp}/s${option}.mp3 2>&1 /dev/null &
 				 printf "Want to see next list of songs... \n" 
 			else 
 				rm  ~/temp_${timestamp}/*.mp3 
@@ -47,5 +47,9 @@ while read -r line; do
 	counter=$((counter+1))
 	
 done < mp3songs_actual
+}
+stop(){
+processid=`ps -ef|grep s*.mp3|head -1|awk '{print $2}'`
+kill -9 $processid
 }
 "$@"
