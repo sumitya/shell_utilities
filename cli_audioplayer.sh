@@ -30,14 +30,14 @@ while read -r line; do
  	
 	eval ln -s "$line" ~/temp_${timestamp}/s${counter}.mp3			
 	
-	if [ `expr ${counter} % 10` -eq 0 ]; then
+	if [ `expr ${counter} % 20` -eq 0 ]; then
 		printf "===========================================================\n"
 		printf "Want to play any of them(Y/n):"
 	    	read var </dev/tty
 			if [ "$var" = "Y" ]; then
 				 printf "\nPress option out of (1|2|3|4|5|6|7|8|9|10):"
 				 read option </dev/tty
-		 		 eval nohup vlc ~/temp_${timestamp}/s${option}.mp3 2>&1 < /dev/null &
+		 		 eval nohup vlc ~/temp_${timestamp}/s${option}.mp3 2>&1 < /dev/null & 
 				 return
 				 clear
 			else 
