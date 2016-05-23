@@ -32,10 +32,10 @@ while read -r line; do
 	
 	if [ `expr ${counter} % 10` -eq 0 ]; then
 		printf "===========================================================\n"
-		printf "Want to play any of them(Y/n)\n"
+		printf "Want to play any of them(Y/n):"
 	    	read var </dev/tty
 			if [ "$var" = "Y" ]; then
-				 printf "Press option out of (1|2|3|4|5|6|7|8|9|10)\n"
+				 printf "\nPress option out of (1|2|3|4|5|6|7|8|9|10):"
 				 read option </dev/tty
 		 		 eval nohup vlc ~/temp_${timestamp}/s${option}.mp3 2>&1 < /dev/null &
 				 return
@@ -44,7 +44,7 @@ while read -r line; do
 				rm  ~/temp_${timestamp}/*.mp3 
 				counter=0
 				clear
-				printf "Want to see next list of songs(Y/n)\n"
+				printf "\nWant to see next list of songs(Y/n):"
 				read nsong </dev/tty
 				clear
 					if [ "$nsong" = "n" ]; then 
